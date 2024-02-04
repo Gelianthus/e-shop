@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import mongoConnection from "@/lib/mongoose/mongoconnection";
 import User from "@/lib/mongoose/models/User";
+import Cart from "@/lib/mongoose/models/Cart";
 
 const handler = NextAuth({
 	providers: [
@@ -19,13 +20,17 @@ const handler = NextAuth({
 				});
 
 				if (!profileExist) {
-					await User.create({
+					const createdUser = await User.create({
 						name: user.name,
 						email: user.email,
 						profile_pic: {
 							img_src: user.image,
 							img_alt: `Profile picture of ${user.name}`,
 						},
+					});
+
+					await Cart.create({
+						user: createdUser._id,
 					});
 					return true;
 				}
