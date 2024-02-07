@@ -7,7 +7,7 @@ export async function GET(req, res) {
 
 	try {
 		const products = await Product.find({ type: "Digital" })
-			.sort({ release_date: 1 })
+			.sort({ release_date: -1 })
 			.limit(10);
 		if (products) {
 			return NextResponse.json({ products }, { status: 200 });

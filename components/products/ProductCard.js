@@ -9,8 +9,8 @@ export default function ProductCard({ product }) {
 			className="bg-white p-4 w-64"
 		>
 			<Image
-				src={images[0].img_src}
-				alt={images[0].img_alt}
+				src={images[0]?.img_src}
+				alt={images[0]?.img_alt}
 				width={240}
 				height={240}
 				className="block mx-auto"
@@ -20,7 +20,9 @@ export default function ProductCard({ product }) {
 				<span>{name}</span>
 				<span>${price}</span>
 			</div>
-			<span className="block my-1">{about}</span>
+			<span className="block my-1">
+				{about.length > 80 ? about.slice(0, 80) + "-" : about}
+			</span>
 		</Link>
 	);
 }

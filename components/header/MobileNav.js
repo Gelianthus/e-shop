@@ -7,26 +7,11 @@ import { userStore } from "@/lib/zustand/userStore";
 
 export default function MobileNav() {
 	const { data: session } = useSession();
-	const { user, setUser } = userStore();
+	const { user, setUser, getUser } = userStore();
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	useEffect(() => {
-		console.log("currentUser:", user);
-		const getUser = async () => {
-			try {
-				const res = await fetch(
-					`/api/users/user?useremail=${session?.user.email}`
-				);
-				if (res.ok) {
-					const data = await res.json();
-					setUser(data.user);
-				}
-			} catch (error) {
-				console.log(error.message);
-			}
-		};
-
-		session && getUser();
+		session && getUser(session?.user.email);
 	}, [session]);
 
 	return (

@@ -6,7 +6,7 @@ export async function GET(req, res) {
 	await mongoConnection();
 
 	try {
-		const products = await Product.find().sort({ release_date: 1 }).limit(10);
+		const products = await Product.find().sort({ release_date: -1 }).limit(10);
 		if (products) {
 			return NextResponse.json({ products }, { status: 200 });
 		} else {

@@ -6,26 +6,12 @@ import { useEffect } from "react";
 import { userStore } from "@/lib/zustand/userStore";
 
 export default function Nav() {
-	const { user, setUser } = userStore();
+	const { user, setUser, getUser } = userStore();
 	const { data: session } = useSession();
 
 	useEffect(() => {
-		console.log("currentUser:", user);
-		const getUser = async () => {
-			try {
-				const res = await fetch(
-					`/api/users/user?useremail=${session?.user.email}`
-				);
-				if (res.ok) {
-					const data = await res.json();
-					setUser(data.user);
-				}
-			} catch (error) {
-				console.log(error.message);
-			}
-		};
-
-		session && getUser();
+		console.log("user:", user);
+		session && getUser(session?.user.email);
 	}, [session]);
 
 	return (

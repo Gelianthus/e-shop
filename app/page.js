@@ -33,7 +33,6 @@ export default function Home() {
 				me to undo your purchase.
 			</p>
 			<Products />
-			<Song />
 		</main>
 	);
 }
