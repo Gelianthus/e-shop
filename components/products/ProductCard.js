@@ -1,5 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
+
+import { CldImage } from "next-cloudinary";
 
 export default function ProductCard({ product }) {
 	const { _id, name, type, price, images, about } = product;
@@ -8,8 +9,10 @@ export default function ProductCard({ product }) {
 			href={`/product?id=${_id}`}
 			className="bg-white p-4 w-64"
 		>
-			<Image
-				src={images[0]?.img_src}
+			<CldImage
+				src={`e-shop/${
+					images[0].img_src.slice(8, images[0].img_src.length).split(".")[0]
+				}`}
 				alt={images[0]?.img_alt}
 				width={240}
 				height={240}

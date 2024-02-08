@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import { scrollLock } from "@/utils/useEffectFunc";
+import { CldImage } from "next-cloudinary";
 
 export default function ImageGallery({ images }) {
 	const imagePrevRef = useRef(null);
@@ -11,13 +11,24 @@ export default function ImageGallery({ images }) {
 
 	useEffect(() => {
 		scrollLock(imgPrevToggle);
+		console.log(
+			`e-shop/${
+				images[imageIndex].img_src
+					.slice(8, images[imageIndex].img_src.length)
+					.split(".")[0]
+			}`
+		);
 	}, [imgPrevToggle]);
 
 	return (
 		<div className="space-y-1 mx-auto">
 			<div className="block xs:hidden p-1 bg-neutral-200 min-w-64 max-w-64 sm:max-w-96 sm:min-w-96">
-				<Image
-					src={images[imageIndex].img_src}
+				<CldImage
+					src={`e-shop/${
+						images[imageIndex].img_src
+							.slice(8, images[imageIndex].img_src.length)
+							.split(".")[0]
+					}`}
 					alt={images[imageIndex].img_alt}
 					width={360}
 					height={360}
@@ -31,8 +42,12 @@ export default function ImageGallery({ images }) {
 				}}
 				className="hidden xs:block p-1 bg-neutral-200 min-w-64 max-w-64 sm:max-w-96 sm:min-w-96"
 			>
-				<Image
-					src={images[imageIndex].img_src}
+				<CldImage
+					src={`e-shop/${
+						images[imageIndex].img_src
+							.slice(8, images[imageIndex].img_src.length)
+							.split(".")[0]
+					}`}
 					alt={images[imageIndex].img_alt}
 					width={360}
 					height={360}
@@ -47,8 +62,12 @@ export default function ImageGallery({ images }) {
 							key={index}
 							className="bg-red-400 cursor-pointer"
 						>
-							<Image
-								src={image.img_src}
+							<CldImage
+								src={`e-shop/${
+									images[index].img_src
+										.slice(8, images[index].img_src.length)
+										.split(".")[0]
+								}`}
 								alt={image.img_alt}
 								width={40}
 								height={40}
@@ -62,8 +81,12 @@ export default function ImageGallery({ images }) {
 				ref={imagePrevRef}
 				className="h-fit p-1 sm:p-4 my-auto overflow-hidden relative outline-none"
 			>
-				<Image
-					src={images[imageIndex].img_src}
+				<CldImage
+					src={`e-shop/${
+						images[imageIndex].img_src
+							.slice(8, images[imageIndex].img_src.length)
+							.split(".")[0]
+					}`}
 					alt={images[imageIndex].img_alt}
 					width={720}
 					height={720}
