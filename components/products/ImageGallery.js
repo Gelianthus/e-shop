@@ -11,13 +11,6 @@ export default function ImageGallery({ images }) {
 
 	useEffect(() => {
 		scrollLock(imgPrevToggle);
-		console.log(
-			`e-shop/${
-				images[imageIndex].img_src
-					.slice(8, images[imageIndex].img_src.length)
-					.split(".")[0]
-			}`
-		);
 	}, [imgPrevToggle]);
 
 	return (
@@ -32,7 +25,8 @@ export default function ImageGallery({ images }) {
 					alt={images[imageIndex].img_alt}
 					width={360}
 					height={360}
-					className="block w-full"
+					className="block w-full cursor-pointer"
+					loading="lazy"
 				/>
 			</div>
 			<div
@@ -40,7 +34,7 @@ export default function ImageGallery({ images }) {
 					imagePrevRef.current.showModal();
 					setImgPrevToggle(true);
 				}}
-				className="hidden xs:block p-1 bg-neutral-200 min-w-64 max-w-64 sm:max-w-96 sm:min-w-96"
+				className="hidden xs:block p-1 bg-gray-200 min-w-64 max-w-64 sm:max-w-96 sm:min-w-96"
 			>
 				<CldImage
 					src={`e-shop/${
@@ -51,10 +45,11 @@ export default function ImageGallery({ images }) {
 					alt={images[imageIndex].img_alt}
 					width={360}
 					height={360}
-					className="block w-full"
+					className="block w-full cursor-pointer"
+					loading="lazy"
 				/>
 			</div>
-			<div className="p-1 bg-neutral-200 grid grid-cols-4 gap-1 min-w-64 max-w-64 sm:max-w-96 sm:min-w-96 h-fit">
+			<div className="p-1 bg-gray-200 grid grid-cols-4 gap-1 min-w-64 max-w-64 sm:max-w-96 sm:min-w-96 h-fit">
 				{images.map((image, index) => {
 					return (
 						<div
@@ -72,6 +67,7 @@ export default function ImageGallery({ images }) {
 								width={40}
 								height={40}
 								className="block w-full"
+								loading="lazy"
 							/>
 						</div>
 					);
@@ -90,7 +86,8 @@ export default function ImageGallery({ images }) {
 					alt={images[imageIndex].img_alt}
 					width={720}
 					height={720}
-					className="block aspect-square max-w-64 xs:max-w-96 sm:max-w-xl my-auto"
+					className="block aspect-square max-w-64 xs:max-w-96 sm:max-w-xl my-auto "
+					loading="lazy"
 				/>
 				<button
 					onClick={() => {

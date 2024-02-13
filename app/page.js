@@ -6,7 +6,7 @@ export default function Home() {
 		<main>
 			<div className="text-center my-16">
 				<h1 className="font-bold text-5xl mb-2 break-words">
-					Gelianthus' Shed Sale
+					<span className="text-emerald-500">Gelianthus</span>' Shed Sale
 				</h1>
 				<p className="text-neutral-800 text-2xl font-semibold break-words">
 					Summer <span className="line-through">Spring</span> cleaning time! The{" "}

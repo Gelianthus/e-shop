@@ -30,11 +30,17 @@ export default function PhysicalProds() {
 	}, []);
 
 	return (
-		<div className="flex flex-row flex-wrap gap-2 p-4 bg-neutral-600">
-			{loading && <p>Loading products</p>}
+		<div className="flex flex-row flex-wrap justify-center gap-2 ">
+			{loading && (
+				<p className="my-4 font-semibold text-lg text-center">
+					Loading products
+				</p>
+			)}
 
 			{products.length === 0 && !loading ? (
-				<p>No products to display</p>
+				<p className="my-4 font-semibold text-lg text-center">
+					No products to display
+				</p>
 			) : (
 				products.map((product) => {
 					return (

@@ -7,7 +7,7 @@ export default function ProductCard({ product }) {
 	return (
 		<Link
 			href={`/product?id=${_id}`}
-			className="bg-white p-4 w-64"
+			className="bg-white p-4 border-2 border-neutral-400 w-64 hover:bg-gray-100 active:bg-gray-300"
 		>
 			<CldImage
 				src={`e-shop/${
@@ -17,6 +17,7 @@ export default function ProductCard({ product }) {
 				width={240}
 				height={240}
 				className="block mx-auto"
+				loading="lazy"
 			/>
 			<span className="text-xs block my-2 text-green-500">{type}</span>
 			<div className="flex flex-col xs:flex-row gap-1 xs:gap-4 xs:justify-between my-1 text-xl font-semibold">

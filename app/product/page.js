@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import ImageGallery from "@/components/products/ImageGallery";
 import { userStore } from "@/lib/zustand/userStore";
-import SignInModal from "@/components/SignInModal";
+import SignInModal from "@/components/modals/SignInModal";
 import { modalControlStore } from "@/lib/zustand/modalControlStore";
 
 export default function ProductPage() {
@@ -44,6 +44,7 @@ export default function ProductPage() {
 						"Content-type": "application/json",
 					},
 					body: JSON.stringify({ user_id: user?._id, product_id: id }),
+					cache: "no-store",
 				});
 				if (res.ok) {
 					const data = await res.json();
@@ -60,7 +61,13 @@ export default function ProductPage() {
 
 	return (
 		<>
-			{product === null && <main>Product Not Found</main>}
+			{product === null && (
+				<main className="p-4 xs:p-8 sm:py-8 sm:px-16">
+					<h1 className="text-center font-bold text-2xl my-8">
+						Product Not Found
+					</h1>
+				</main>
+			)}
 			{product && (
 				<main className="p-4 xs:p-8 sm:py-8 sm:px-16">
 					<div className="flex flex-row flex-wrap gap-4 my-8 ">
@@ -76,11 +83,19 @@ export default function ProductPage() {
 							<div className="flex flex-row gap-2 flex-wrap">
 								<button
 									onClick={() => addToCartHandle()}
-									className="p-2 bg-neutral-200"
+									className="p-2 bg-gray-200 hover:bg-emerald-400 hover:text-neutral-50  active:bg-emerald-600 active:text-neutral-50"
 								>
-									Add to cart
+									Add to cart{" "}
+									<span className="material-symbols-outlined wght-300 align-bottom">
+										add_shopping_cart
+									</span>
 								</button>
-								<button className="p-2 bg-neutral-200">Buy</button>
+								<button className="p-2 bg-gray-200 hover:bg-sky-400 hover:text-neutral-50  active:bg-sky-600 active:text-neutral-50">
+									Buy{" "}
+									<span className="material-symbols-outlined wght-300 align-bottom">
+										shopping_bag
+									</span>
+								</button>
 							</div>
 							<SignInModal />
 						</div>

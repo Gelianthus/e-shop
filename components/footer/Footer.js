@@ -1,7 +1,12 @@
+"use client";
+
+import { productTabStore } from "@/lib/zustand/productTabStore";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
+	const { setTab } = productTabStore();
+
 	return (
 		<footer className="bg-gray-800 text-neutral-50 sm:p-16 xs:p-8 p-4">
 			<div className="mb-8 xs:mb-12 sm:mb-16">
@@ -27,7 +32,8 @@ export default function Footer() {
 					<ul className="text-xs xs:text-sm space-y-2">
 						<li>
 							<Link
-								href=""
+								onClick={() => setTab("digital")}
+								href="/#products"
 								className="hover:underline active:underline"
 							>
 								Digital Goods
@@ -35,7 +41,8 @@ export default function Footer() {
 						</li>
 						<li>
 							<Link
-								href=""
+								onClick={() => setTab("physical")}
+								href="/#products"
 								className="hover:underline active:underline"
 							>
 								Physical Goods
@@ -48,26 +55,35 @@ export default function Footer() {
 					<ul className="text-xs xs:text-sm space-y-2">
 						<li>
 							<Link
-								href=""
+								href="/about"
 								className="hover:underline active:underline"
 							>
-								FAQ
+								About
 							</Link>
 						</li>
 						<li>
 							<Link
-								href=""
+								href="/about#terms-and-conditions"
 								className="hover:underline active:underline"
 							>
 								Terms and Conditions
 							</Link>
 						</li>
+
 						<li>
 							<Link
-								href=""
+								href="/about#privacy"
 								className="hover:underline active:underline"
 							>
 								Privacy
+							</Link>
+						</li>
+						<li>
+							<Link
+								href="/about#faq"
+								className="hover:underline active:underline"
+							>
+								FAQ
 							</Link>
 						</li>
 					</ul>
@@ -75,30 +91,7 @@ export default function Footer() {
 				<div>
 					<h2 className="font-bold mb-2 text-sm xs:text-base">Contacts</h2>
 					<ul className="text-xs xs:text-sm space-y-2">
-						<li>
-							<Link
-								href=""
-								className="hover:underline active:underline"
-							>
-								Twitter
-							</Link>
-						</li>
-						<li>
-							<Link
-								href=""
-								className="hover:underline active:underline"
-							>
-								Discord
-							</Link>
-						</li>
-						<li>
-							<Link
-								href=""
-								className="hover:underline active:underline"
-							>
-								Facebook
-							</Link>
-						</li>
+						<li>gelotandoc04@gmail.com</li>
 					</ul>
 				</div>
 			</nav>

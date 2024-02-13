@@ -22,19 +22,39 @@ export default function MobileNav() {
 			<div
 				className={`${
 					menuOpen ? "block" : "hidden"
-				} absolute right-0 top-12 w-24 text-end p-2 bg-neutral-200 space-y-2`}
+				} absolute right-0 top-12 w-32 text-end p-2 bg-neutral-200 space-y-2`}
 			>
-				{!session && <button onClick={() => signIn("google")}>Sign in</button>}
+				{!session && (
+					<button onClick={() => signIn("google")}>
+						Sign in{" "}
+						<span className="material-symbols-outlined wght-300 align-bottom">
+							login
+						</span>
+					</button>
+				)}
 				{session && (
 					<>
-						<Link href={""}>Cart</Link>
+						<Link
+							className={user === null ? "disabled" : ""}
+							aria-disabled={user === null}
+							tabIndex={user === null ? -1 : undefined}
+							href={`/cart`}
+						>
+							Cart{" "}
+							<span className="material-symbols-outlined wght-300 align-bottom">
+								shopping_cart
+							</span>
+						</Link>
 						<button
 							onClick={() => {
-								signOut();
+								signOut({ callbackUrl: "/" });
 								setUser(null);
 							}}
 						>
-							Sign out
+							Sign out{" "}
+							<span className="material-symbols-outlined wght-300 align-bottom">
+								logout
+							</span>
 						</button>
 					</>
 				)}
