@@ -37,11 +37,6 @@ export default function CartPage() {
 		user ? getCart() : redirect("/");
 	}, []);
 
-	useEffect(() => {
-		console.log("Included Items", checkOutItems);
-		// remove id from checkOutItems when deleting from cart
-	}, [checkOutItems]);
-
 	return (
 		<main className="p-4 xs:p-8 sm:py-8 sm:px-16">
 			{user === null && (

@@ -8,7 +8,18 @@ export default function Footer() {
 	const { setTab } = productTabStore();
 
 	return (
-		<footer className="bg-gray-800 text-neutral-50 sm:p-16 xs:p-8 p-4">
+		<footer className="relative bg-gray-800 text-neutral-50 sm:p-16 xs:p-8 p-4">
+			<button
+				title="Back to top"
+				onClick={() => {
+					window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+				}}
+				className="absolute top-0 right-0 sm:top-4 sm:right-4 p-2 w-fit h-fit hover:text-gray-400 active:text-gray-600"
+			>
+				<span className="material-symbols-outlined wght-700 bg-gray-950">
+					keyboard_arrow_up
+				</span>
+			</button>
 			<div className="mb-8 xs:mb-12 sm:mb-16">
 				<div className="mx-auto w-36 sm:w-60">
 					<Image
@@ -26,7 +37,7 @@ export default function Footer() {
 					© 2024 Gelianthus. Built with Next.js
 				</span>
 			</div>
-			<nav className="grid grid-cols-3 gap-4">
+			<nav className="grid grid-cols1 xs:grid-cols-2 sm:grid-cols-3 gap-4">
 				<div>
 					<h2 className="font-bold mb-2 text-sm xs:text-base">Products</h2>
 					<ul className="text-xs xs:text-sm space-y-2">
