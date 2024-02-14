@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { modalControlStore } from "@/lib/zustand/modalControlStore";
-import DelFromCartModal from "./modals/DelFromCartModal";
+import DelFromCartModal from "../modals/DelFromCartModal";
 
 export default function CartItem({
 	item,
@@ -14,6 +14,7 @@ export default function CartItem({
 }) {
 	const [checked, setChecked] = useState(true);
 	const { setDelFromCartModalVisibility } = modalControlStore();
+
 	const incrementQty = async () => {
 		try {
 			const res = await fetch(`/api/add-to-cart`, {
@@ -131,7 +132,7 @@ export default function CartItem({
 				</Link>
 				<div className="flex flex-row gap-4 items-center px-4 pb-4">
 					<span className="font-semibold rounded bg-neutral-100 text-neutral-800 p-2">
-						${item?.product.price}
+						$ {item?.product.price}
 					</span>
 					<div className="rounded bg-neutral-100 text-neutral-800 space-x-4 overflow-hidden w-fit">
 						<button

@@ -3,6 +3,8 @@ import GoogleProvider from "next-auth/providers/google";
 import mongoConnection from "@/lib/mongoose/mongoconnection";
 import User from "@/lib/mongoose/models/User";
 import Cart from "@/lib/mongoose/models/Cart";
+import ToBeDelivered from "@/lib/mongoose/models/ToBeDelivered";
+import TransactionHistory from "@/lib/mongoose/models/TransactionHistory";
 
 const handler = NextAuth({
 	providers: [
@@ -29,9 +31,27 @@ const handler = NextAuth({
 						},
 					});
 
-					await Cart.create({
+					const cartCreated = await Cart.create({
 						user: createdUser._id,
 					});
+
+					const toBeDeliveredCreated = await ToBeDelivered.create({
+						user: createdUser._id,
+					});
+
+					const transactionHistory = await TransactionHistory.create({
+						user: createdUser._id,
+					});
+
+					if (
+						!createdUser ||
+						!cartCreated ||
+						!toBeDeliveredCreated ||
+						!transactionHistory
+					) {
+						return false;
+					}
+
 					return true;
 				}
 

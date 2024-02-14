@@ -5,11 +5,17 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { productTabStore } from "@/lib/zustand/productTabStore";
-import CartItem from "@/components/CartItem";
+import { toBeDeliveredStore } from "@/lib/zustand/toBeDeliveredStore";
+import { modalControlStore } from "@/lib/zustand/modalControlStore";
+import CartItem from "@/components/cart-page/CartItem";
+import ToBeDelivered from "@/components/cart-page/ToBeDelivered";
+import CheckOutModal from "@/components/modals/CheckOutModal";
 
 export default function CartPage() {
 	const { user } = userStore();
 	const { setTab } = productTabStore();
+	const { setToBeDelivered } = toBeDeliveredStore();
+	const { setCheckOutModalVisibility } = modalControlStore();
 
 	const [cartItems, setCartItems] = useState([]);
 	const [checkOutItems, setCheckOutItems] = useState([]);
@@ -35,7 +41,7 @@ export default function CartPage() {
 			}
 		};
 		user ? getCart() : redirect("/");
-	}, []);
+	}, [setToBeDelivered]);
 
 	return (
 		<main className="p-4 xs:p-8 sm:py-8 sm:px-16">
@@ -46,9 +52,10 @@ export default function CartPage() {
 			)}
 			{user && (
 				<div>
-					<h1 className="font-bold text-2xl">
+					<h1 className="font-bold text-4xl mb-8">
 						Hi {user?.name}, ready to check out?
 					</h1>
+					<p className="font-bold text-2xl">Cart</p>
 					<ul className="my-8 space-y-2">
 						{cartItems.length > 0 ? (
 							cartItems.map((item) => {
@@ -63,25 +70,44 @@ export default function CartPage() {
 								);
 							})
 						) : (
-							<p className="my-4 text-xl text-center">
-								Your cart is empty. Browse{" "}
-								<Link
-									onClick={() => setTab("latest")}
-									href={"/#products"}
-									className="underline"
-								>
-									products
-								</Link>{" "}
-								here
-							</p>
+							<li>
+								<p className="my-4 text-xl text-center border-2 p-2">
+									Your cart is empty. Browse{" "}
+									<Link
+										onClick={() => setTab("latest")}
+										href={"/#products"}
+										className="underline"
+									>
+										products
+									</Link>{" "}
+									here
+								</p>
+							</li>
 						)}
 					</ul>
-					<button className="block ml-auto bg-gray-200 hover:bg-green-400 hover:text-white active:bg-green-600 active:text-white p-2">
+					<button
+						onClick={() => setCheckOutModalVisibility()}
+						className="block ml-auto bg-gray-200 hover:bg-green-400 hover:text-white active:bg-green-600 active:text-white p-2"
+					>
 						Checkout{" "}
 						<span className="material-symbols-outlined wght-300 align-bottom">
 							shopping_cart_checkout
 						</span>
 					</button>
+					<CheckOutModal
+						checkOutItems={checkOutItems}
+						setCheckOutItems={setCheckOutItems}
+					/>
+					<ToBeDelivered />
+
+					<p className="font-bold text-2xl">Transaction History</p>
+					<ul>
+						<li>
+							<p className="my-4 text-xl text-center border-2 p-2">
+								No purchases have been made yet.
+							</p>
+						</li>
+					</ul>
 				</div>
 			)}
 		</main>

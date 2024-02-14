@@ -1,5 +1,6 @@
 import mongoConnection from "@/lib/mongoose/mongoconnection";
 import Cart from "@/lib/mongoose/models/Cart";
+import Product from "@/lib/mongoose/models/Product";
 import { NextResponse } from "next/server";
 
 export async function PUT(req, res) {
@@ -8,8 +9,18 @@ export async function PUT(req, res) {
 		const { user_id, product_id } = await req.json();
 
 		const cart = await Cart.findOne({ user: user_id });
+		const prdct = await Product.findById(product_id);
 
-		if (!cart) return NextResponse.json({ status: 500 });
+		if (prdct.quantity < 1 || !prdct.available) {
+			return NextResponse.json(
+				{ message: "Product unavailable" },
+				{ status: 200 }
+			);
+		}
+
+		if (!cart) {
+			return NextResponse.json({ status: 500 });
+		}
 
 		const isAlreadyAdded = cart.items.some(
 			(item) => item.product.toString() === product_id
