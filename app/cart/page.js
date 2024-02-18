@@ -10,13 +10,13 @@ import { modalControlStore } from "@/lib/zustand/modalControlStore";
 import CartItem from "@/components/cart-page/CartItem";
 import ToBeDelivered from "@/components/cart-page/ToBeDelivered";
 import CheckOutModal from "@/components/modals/CheckOutModal";
+import TransactionHistory from "@/components/cart-page/TransactionHistory";
 
 export default function CartPage() {
 	const { user } = userStore();
 	const { setTab } = productTabStore();
 	const { setToBeDelivered } = toBeDeliveredStore();
 	const { setCheckOutModalVisibility } = modalControlStore();
-
 	const [cartItems, setCartItems] = useState([]);
 	const [checkOutItems, setCheckOutItems] = useState([]);
 
@@ -86,8 +86,16 @@ export default function CartPage() {
 						)}
 					</ul>
 					<button
-						onClick={() => setCheckOutModalVisibility()}
-						className="block ml-auto bg-gray-200 hover:bg-green-400 hover:text-white active:bg-green-600 active:text-white p-2"
+						onClick={() => {
+							if (checkOutItems.length > 0) {
+								setCheckOutModalVisibility();
+							} else {
+								window.alert(
+									"No selected items. Please include items that you want to check out."
+								);
+							}
+						}}
+						className={` block ml-auto bg-gray-200 hover:bg-green-400 hover:text-white active:bg-green-600 active:text-white p-2`}
 					>
 						Checkout{" "}
 						<span className="material-symbols-outlined wght-300 align-bottom">
@@ -95,19 +103,14 @@ export default function CartPage() {
 						</span>
 					</button>
 					<CheckOutModal
+						userId={user?._id}
+						cartItems={cartItems}
+						setCartItems={setCartItems}
 						checkOutItems={checkOutItems}
 						setCheckOutItems={setCheckOutItems}
 					/>
-					<ToBeDelivered />
-
-					<p className="font-bold text-2xl">Transaction History</p>
-					<ul>
-						<li>
-							<p className="my-4 text-xl text-center border-2 p-2">
-								No purchases have been made yet.
-							</p>
-						</li>
-					</ul>
+					<ToBeDelivered userId={user?._id} />
+					<TransactionHistory userId={user?._id} />
 				</div>
 			)}
 		</main>

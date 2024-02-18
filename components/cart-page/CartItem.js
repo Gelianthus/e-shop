@@ -28,11 +28,6 @@ export default function CartItem({
 			if (res.ok) {
 				const data = await res.json();
 				setCartItems(data.cart.items);
-				setCheckOutItems(
-					data.cart.items.map((item) => {
-						return item.product._id;
-					})
-				);
 			} else {
 				const data = await res.json();
 				console.log("error:", data.message);
@@ -55,11 +50,6 @@ export default function CartItem({
 			if (res.ok) {
 				const data = await res.json();
 				setCartItems(data.cart.items);
-				setCheckOutItems(
-					data.cart.items.map((item) => {
-						return item.product._id;
-					})
-				);
 			} else {
 				const data = await res.json();
 				console.log("error:", data.message);

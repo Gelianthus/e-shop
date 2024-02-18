@@ -13,6 +13,10 @@ const handler = NextAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 		}),
 	],
+	session: {
+		autoSignIn: false,
+		maxAge: 4 * 60 * 60,
+	},
 	callbacks: {
 		async signIn({ user }) {
 			await mongoConnection();

@@ -29,6 +29,9 @@ export default function AboutPage() {
 					FAQ
 				</Link>
 			</nav>
+			<span className="my-2 text-xs text-neutral-600 text-end block">
+				Written by ChatGPT
+			</span>
 			<section
 				className="scroll-mt-16 bg-neutral-100 p-4 my-8"
 				id="about"

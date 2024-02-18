@@ -12,7 +12,7 @@ export default function MobileNav() {
 	const navRef = useRef(null);
 
 	useEffect(() => {
-		session && getUser(session?.user.email);
+		session?.user && getUser(session?.user.email);
 	}, [session]);
 
 	useEffect(() => {

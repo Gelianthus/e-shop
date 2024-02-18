@@ -10,7 +10,7 @@ export default function Nav() {
 	const { data: session } = useSession();
 
 	useEffect(() => {
-		session && getUser(session?.user.email);
+		session?.user && getUser(session?.user.email);
 	}, [session]);
 
 	return (

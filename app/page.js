@@ -20,7 +20,7 @@ export default function Home() {
 			</div>
 			<p className="text-center font-bold my-4 break-words">
 				<span className="text-rose-700">Disclaimer: </span> This website is for
-				demonstration purpose only, all listed products are non-existent.
+				demonstration purpose only.
 			</p>
 			<Products />
 		</main>

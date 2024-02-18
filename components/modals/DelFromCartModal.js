@@ -23,9 +23,7 @@ export default function DelFromCartModal({ removeFromCart }) {
 			ref={modalRef}
 			className="p-8"
 		>
-			<span className="text-center font-semibold text-lg">
-				Remove from cart?
-			</span>
+			<p className="text-center font-semibold text-lg">Remove from cart?</p>
 			<div className="space-x-4 mt-4">
 				<button
 					className="p-2 bg-gray-200 hover:bg-rose-500 hover:text-white active:bg-rose-700 active:text-white"
@@ -33,13 +31,19 @@ export default function DelFromCartModal({ removeFromCart }) {
 						setDelFromCartModalVisibility();
 					}}
 				>
-					Cancel
+					Cancel{" "}
+					<span className="material-symbols-outlined wght-300 align-bottom">
+						close
+					</span>
 				</button>
 				<button
 					className="p-2 bg-gray-200 hover:bg-gray-700 hover:text-white active:bg-gray-900 active:text-white"
 					onClick={removeFromCart}
 				>
 					Confirm
+					<span className="material-symbols-outlined wght-300 align-bottom">
+						done
+					</span>
 				</button>
 			</div>
 		</dialog>

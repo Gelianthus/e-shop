@@ -2,18 +2,22 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import ImageGallery from "@/components/products/ImageGallery";
-import { userStore } from "@/lib/zustand/userStore";
-import SignInModal from "@/components/modals/SignInModal";
 import { modalControlStore } from "@/lib/zustand/modalControlStore";
+import { userStore } from "@/lib/zustand/userStore";
+import ImageGallery from "@/components/products/ImageGallery";
+import SignInModal from "@/components/modals/SignInModal";
+import AddToCartModal from "@/components/modals/AddToCartModal";
+import BuyProductModal from "@/components/modals/BuyProductModal";
 
 export default function ProductPage() {
+	const { setAddToCartModalVisibility } = modalControlStore();
+	const { setBuyProductModalVisibility } = modalControlStore();
 	const { user } = userStore();
-	const { setLoginModalVisibility } = modalControlStore();
 	const searchParams = useSearchParams();
 	const id = searchParams.get("id");
 
 	const [product, setProduct] = useState(null);
+	const [quantity, setQuantity] = useState(1);
 
 	useEffect(() => {
 		const getProduct = async () => {
@@ -32,32 +36,6 @@ export default function ProductPage() {
 
 		getProduct();
 	}, []);
-
-	const addToCartHandle = async () => {
-		if (user === null) {
-			setLoginModalVisibility();
-		} else {
-			try {
-				const res = await fetch(`/api/add-to-cart`, {
-					method: "PUT",
-					headers: {
-						"Content-type": "application/json",
-					},
-					body: JSON.stringify({ user_id: user?._id, product_id: id }),
-					cache: "no-store",
-				});
-				if (res.ok) {
-					const data = await res.json();
-					window.alert(data.message);
-				} else {
-					const data = await res.json();
-					console.log("error:", data.message);
-				}
-			} catch (error) {
-				console.log(error.message);
-			}
-		}
-	};
 
 	return (
 		<>
@@ -82,7 +60,7 @@ export default function ProductPage() {
 							<p className="my-8">{product?.description}</p>
 							<div className="flex flex-row gap-2 flex-wrap">
 								<button
-									onClick={() => addToCartHandle()}
+									onClick={() => setAddToCartModalVisibility(true)}
 									className="p-2 bg-gray-200 hover:bg-emerald-400 hover:text-neutral-50  active:bg-emerald-600 active:text-neutral-50"
 								>
 									Add to cart{" "}
@@ -90,16 +68,29 @@ export default function ProductPage() {
 										add_shopping_cart
 									</span>
 								</button>
-								<button className="p-2 bg-gray-200 hover:bg-sky-400 hover:text-neutral-50  active:bg-sky-600 active:text-neutral-50">
+								<button
+									onClick={() => setBuyProductModalVisibility(true)}
+									className="p-2 bg-gray-200 hover:bg-sky-400 hover:text-neutral-50  active:bg-sky-600 active:text-neutral-50"
+								>
 									Buy{" "}
 									<span className="material-symbols-outlined wght-300 align-bottom">
 										shopping_bag
 									</span>
 								</button>
 							</div>
-							<SignInModal />
 						</div>
 					</div>
+					<SignInModal setQuantity={setQuantity} />
+					<AddToCartModal
+						user={user}
+						product={product}
+					/>
+					<BuyProductModal
+						user={user}
+						product={product}
+						quantity={quantity}
+						setQuantity={setQuantity}
+					/>
 				</main>
 			)}
 		</>
