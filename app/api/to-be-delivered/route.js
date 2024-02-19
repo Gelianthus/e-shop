@@ -48,6 +48,8 @@ export async function PUT(req, res) {
 			return NextResponse.json({ message: "Cart not found" }, { status: 404 });
 		}
 
+		// CHATGPT Solution
+
 		// Initialize an object to store items to be added or updated in ToBeDelivered
 		const itemsToUpdate = {};
 
