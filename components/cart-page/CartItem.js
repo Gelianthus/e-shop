@@ -104,7 +104,7 @@ export default function CartItem({
 		>
 			<div>
 				<Link
-					href={`/product?id=${item?.product._id}`}
+					href={`/product/${item?.product._id}`}
 					className="flex flex-row flex-wrap gap-4 items-center hover:underline p-4"
 				>
 					<CldImage

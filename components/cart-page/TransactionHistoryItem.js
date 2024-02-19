@@ -68,7 +68,7 @@ export default function TransactionHistoryItem({
 			<div>
 				<Link
 					className="flex flex-row flex-wrap gap-4 items-center hover:underline p-4"
-					href={`/product?id=${transaction.product._id}`}
+					href={`/product/${transaction.product._id}`}
 				>
 					{" "}
 					<CldImage

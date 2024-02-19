@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { modalControlStore } from "@/lib/zustand/modalControlStore";
 import { userStore } from "@/lib/zustand/userStore";
@@ -13,8 +13,9 @@ export default function ProductPage() {
 	const { setAddToCartModalVisibility } = modalControlStore();
 	const { setBuyProductModalVisibility } = modalControlStore();
 	const { user } = userStore();
-	const searchParams = useSearchParams();
-	const id = searchParams.get("id");
+
+	const params = useParams();
+	const { id } = params;
 
 	const [product, setProduct] = useState(null);
 	const [quantity, setQuantity] = useState(1);
@@ -28,6 +29,8 @@ export default function ProductPage() {
 				if (res.ok) {
 					const data = await res.json();
 					setProduct(data.prod);
+				} else {
+					redirect("/");
 				}
 			} catch (error) {
 				console.log(error.message);

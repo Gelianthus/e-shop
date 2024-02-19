@@ -6,7 +6,7 @@ export default function ProductCard({ product }) {
 	const { _id, name, type, price, images, about } = product;
 	return (
 		<Link
-			href={`/product?id=${_id}`}
+			href={`/product/${_id}`}
 			className="bg-white p-4 border-2 border-neutral-400 w-64 hover:bg-gray-100 active:bg-gray-300"
 		>
 			<CldImage
