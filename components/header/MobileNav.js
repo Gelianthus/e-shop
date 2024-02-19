@@ -49,12 +49,15 @@ export default function MobileNav() {
 			<div
 				className={`${
 					menuOpen ? "block" : "hidden"
-				} absolute right-0 top-12 w-32 text-end p-2 bg-gray-200 rounded space-y-2`}
+				} absolute right-0 top-12 w-32 text-end p-2 bg-gray-200 rounded space-y-2 z-50`}
 			>
 				{!session && (
-					<button onClick={() => signIn("google")}>
+					<button
+						onClick={() => signIn("google")}
+						className="hover:text-sky-600 active:text-sky-800"
+					>
 						Sign in{" "}
-						<span className="material-symbols-outlined wght-300 align-bottom hover:text-sky-600 active:text-sky-800">
+						<span className="material-symbols-outlined wght-300 align-bottom ">
 							login
 						</span>
 					</button>
@@ -62,10 +65,7 @@ export default function MobileNav() {
 				{session && (
 					<>
 						<Link
-							className={`${
-								user === null ? "disabled" : ""
-							} hover:text-amber-600 active:text-amber-800`}
-							aria-disabled={user === null}
+							className={` hover:text-amber-600 active:text-amber-800`}
 							tabIndex={user === null ? -1 : undefined}
 							href={`/cart`}
 							onClick={() => setMenuOpen(false)}

@@ -1,34 +1,112 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function AboutPage() {
+	const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+	const navRef = useRef(null);
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (!navRef.current.contains(event.target)) {
+				setMobileNavOpen(false);
+			}
+		};
+
+		if (mobileNavOpen) {
+			document.addEventListener("mousedown", handleClickOutside);
+		} else {
+			document.removeEventListener("mousedown", handleClickOutside);
+		}
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [mobileNavOpen]);
+
 	return (
 		<main className="p-4 xs:p-8 sm:py-8 sm:px-16">
-			<nav className="sticky top-0 flex flex-row gap-4 bg-white snap-x flex-wrap">
+			<nav className="hidden sticky top-0 xs:flex flex-row gap-2 bg-white snap-x flex-wrap text-xs">
 				<Link
-					className="px-2 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
+					className="px-0.5 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
 					href={"/about"}
 				>
 					About
 				</Link>
 				<Link
-					className="px-2 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
+					className="px-0.5 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
 					href={"/about#terms-and-conditions"}
 				>
-					Terms and Conditions
+					Terms & Conditions
 				</Link>
 				<Link
-					className="px-2 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
+					className="px-0.5 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
 					href={"/about#privacy"}
 				>
 					Privacy
 				</Link>
 				<Link
-					className="px-2 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
+					className="px-0.5 py-4 block hover:bg-gray-200 active:bg-gray-600 active:text-neutral-50"
 					href={"/about#faq"}
 				>
 					FAQ
 				</Link>
 			</nav>
+			<div className="block xs:hidden relative">
+				<button
+					onClick={() => {
+						setMobileNavOpen((prevState) => !prevState);
+					}}
+				>
+					<span className="material-symbols-outlined wght-300 align-bottom">
+						{mobileNavOpen ? "close" : "menu"}
+					</span>
+				</button>
+				<nav
+					ref={navRef}
+					className={`${
+						mobileNavOpen ? "block" : "hidden"
+					} absolute  left-0 top-8 p-2 text-xs bg-gray-200 rounded`}
+				>
+					<Link
+						onClick={() => {
+							setMobileNavOpen((prevState) => !prevState);
+						}}
+						className="p-2 block hover:text-gray-800 active:text-gray-950"
+						href={"/about"}
+					>
+						About
+					</Link>
+					<Link
+						onClick={() => {
+							setMobileNavOpen((prevState) => !prevState);
+						}}
+						className="p-2 block hover:text-gray-800 active:text-gray-950"
+						href={"/about#terms-and-conditions"}
+					>
+						Terms & Conditions
+					</Link>
+					<Link
+						onClick={() => {
+							setMobileNavOpen((prevState) => !prevState);
+						}}
+						className="p-2 block hover:text-gray-800 active:text-gray-950"
+						href={"/about#privacy"}
+					>
+						Privacy
+					</Link>
+					<Link
+						onClick={() => {
+							setMobileNavOpen((prevState) => !prevState);
+						}}
+						className="p-2 block hover:text-gray-800 active:text-gray-950"
+						href={"/about#faq"}
+					>
+						FAQ
+					</Link>
+				</nav>
+			</div>
 			<span className="my-2 text-xs text-neutral-600 text-end block">
 				Written by ChatGPT
 			</span>

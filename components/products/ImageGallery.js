@@ -96,7 +96,10 @@ export default function ImageGallery({ images }) {
 					}}
 					className="absolute top-0 right-0 p-2 bg-neutral-600 text-neutral-50  hover:bg-rose-500 active:bg-rose-600 font-semibold"
 				>
-					Close
+					Close{" "}
+					<span className="material-symbols-outlined wght-300 align-bottom">
+						close
+					</span>
 				</button>
 			</dialog>
 		</div>
