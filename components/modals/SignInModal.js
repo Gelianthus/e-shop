@@ -34,7 +34,7 @@ export default function SignInModal({ setQuantity }) {
 			className="p-8 text-neutral-800 "
 		>
 			<p className="text-center text-xl">
-				Must be signed in to add items into cart
+				Must be signed in to perform this action.
 			</p>
 			<div className="flex flex-row gap-4 flex-wrap justify-end mt-4">
 				<button
