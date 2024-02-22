@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { modalControlStore } from "@/lib/zustand/modalControlStore";
 import DelFromCartModal from "../modals/DelFromCartModal";
 
@@ -15,7 +15,18 @@ export default function CartItem({
 	const [checked, setChecked] = useState(true);
 	const { setDelFromCartModalVisibility } = modalControlStore();
 
+	const [buttonDisabled, setButtonDisabled] = useState(false);
+	const [timeoutId, setTimeoutId] = useState(null);
+
+	const timeoutHandle = () => {
+		const id = setTimeout(() => {
+			setButtonDisabled(false);
+		}, 2200);
+		setTimeoutId(id);
+	};
+
 	const incrementQty = async () => {
+		setButtonDisabled(true);
 		try {
 			const res = await fetch(`/api/add-to-cart`, {
 				method: "PUT",
@@ -38,6 +49,7 @@ export default function CartItem({
 	};
 
 	const decrementQty = async () => {
+		setButtonDisabled(true);
 		try {
 			const res = await fetch(`/api/cart/qty`, {
 				method: "PUT",
@@ -58,6 +70,12 @@ export default function CartItem({
 			console.log(error.message);
 		}
 	};
+
+	useEffect(() => {
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	}, [timeoutId]);
 
 	const checkItemToggle = () => {
 		setChecked((prevState) => !prevState);
@@ -102,6 +120,13 @@ export default function CartItem({
 				checked ? "bg-gray-700 text-white" : "bg-white text-black"
 			}`}
 		>
+			<p
+				className={`${
+					buttonDisabled ? "block" : "hidden"
+				} absolute top-8 left-0 right-0 text-gray-500  font-semibold text-center`}
+			>
+				Please wait a moment before performing an action again.
+			</p>
 			<div>
 				<Link
 					href={`/product/${item?.product._id}`}
@@ -126,10 +151,12 @@ export default function CartItem({
 					</span>
 					<div className="rounded bg-neutral-100 text-neutral-800 space-x-4 overflow-hidden w-fit">
 						<button
+							disabled={buttonDisabled}
 							className="font-bold hover:bg-neutral-300 p-2 active:bg-neutral-300 active:text-rose-500"
 							onClick={() => {
 								if (item.quantity > 1) {
 									decrementQty();
+									timeoutHandle();
 								} else {
 									setDelFromCartModalVisibility();
 								}
@@ -139,8 +166,12 @@ export default function CartItem({
 						</button>
 						<span className="py-2">{item.quantity}</span>
 						<button
+							disabled={buttonDisabled}
 							className="font-bold hover:bg-neutral-300 p-2 active:bg-neutral-300 active:text-emerald-500"
-							onClick={incrementQty}
+							onClick={() => {
+								incrementQty();
+								timeoutHandle();
+							}}
 						>
 							+
 						</button>
